@@ -5,7 +5,7 @@ const Spinner = () => {
     <div className="w-100 mt-20">
       <img
         width={180}
-        classname="text-center mx-auto"
+        className="mx-auto text-center"
         src={spinner}
         alt="Loading..."
       />

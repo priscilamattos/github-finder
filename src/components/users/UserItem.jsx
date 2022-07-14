@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const UserItem = ({ user: { login, avatar_url } }) => {
+function UserItem({ user: { login, avatar_url } }) {
   return (
     <div className="side card compact bg-base-100 shadow-md">
       <div className="card-body flex-row items-center space-x-4">
@@ -22,10 +22,9 @@ const UserItem = ({ user: { login, avatar_url } }) => {
           </Link>
         </div>
       </div>
-      {login}
     </div>
   );
-};
+}
 
 UserItem.propTypes = {
   user: PropTypes.object.isRequired,

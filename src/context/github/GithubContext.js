@@ -3,9 +3,9 @@ import { createContext, useReducer } from "react";
 import githubReducer from "./GithubReducer";
 
 const GithubContext = createContext();
-const REACT_APP_GITHUB_URL = process.env.REACT_APP_GITHUB_URL;
+const GITHUB_URL = process.env.REACT_APP_GITHUB_URL;
 // const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-const GITHUB_TOKEN = "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";
+// const GITHUB_TOKEN = "{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}";
 
 export const GithubProvider = ({ children }) => {
   const initialState = {
@@ -24,14 +24,11 @@ export const GithubProvider = ({ children }) => {
       q: text,
     });
 
-    const response = await fetch(
-      `${REACT_APP_GITHUB_URL}/search/users?${params}`,
-      {
-        headers: {
-          Authorization: `token ${GITHUB_TOKEN}`,
-        },
-      }
-    );
+    const response = await fetch(`${GITHUB_URL}search/users?${params}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
 
     const { items } = await response.json();
 
@@ -47,7 +44,7 @@ export const GithubProvider = ({ children }) => {
   const getUser = async (login) => {
     setLoading();
 
-    const response = await fetch(`${REACT_APP_GITHUB_URL}/users?${login}`, {
+    const response = await fetch(`${GITHUB_URL}/users/?${login}`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
       },

@@ -8,19 +8,13 @@ import RepoList from "../../components/repos/RepoList";
 import GithubContext from "../../context/github/GithubContext";
 
 function User() {
-  const { user, loading, dispatch } = useContext(GithubContext);
+  const { user, loading, getUser } = useContext(GithubContext);
 
   const params = useParams();
 
   useEffect(() => {
-    // dispatch({ type: "SET_LOADING" });
-    const getUserData = async () => {
-      // const userData = await getUserAndRepos(params.login);
-      // dispatch({ type: "GET_USER_AND_REPOS", payload: userData });
-    };
-
-    getUserData();
-  }, [dispatch, params.login]);
+    getUser(params.login);
+  }, [params.login]);
 
   const {
     name,
@@ -46,7 +40,6 @@ function User() {
   // NOTE: check for valid url to users website
 
   const websiteUrl = blog?.startsWith("http") ? blog : "https://" + blog;
-
   return (
     <main>
       <div className="mx-auto w-full lg:w-10/12">

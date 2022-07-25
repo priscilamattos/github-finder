@@ -8,12 +8,15 @@ import RepoList from "../../components/repos/RepoList";
 import GithubContext from "../../context/github/GithubContext";
 
 function User() {
-  const { user, loading, getUser } = useContext(GithubContext);
+  const { user, loading, getUser, getUserRepos, repos } =
+    useContext(GithubContext);
 
   const params = useParams();
 
   useEffect(() => {
     getUser(params.login);
+    getUserRepos(params.login);
+    //eslint-diseable-next-line react-hooks/exhaustive-deps
   }, [params.login]);
 
   const {
@@ -159,7 +162,7 @@ function User() {
               </div>
             </div>
           </div>
-          {/* <RepoList /> */}
+          <RepoList repos={repos} />
         </div>
       </div>
     </main>

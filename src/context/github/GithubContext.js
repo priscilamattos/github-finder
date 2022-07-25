@@ -5,7 +5,7 @@ import githubReducer from "./GithubReducer";
 const GithubContext = createContext();
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL;
 // const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-const GITHUB_TOKEN = "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";
+const GITHUB_TOKEN = "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";
 
 export const GithubProvider = ({ children }) => {
   const initialState = {
@@ -40,6 +40,36 @@ export const GithubProvider = ({ children }) => {
     }
   };
 
+  //Get Repos
+  const getUserRepos = async (login) => {
+    setLoading();
+
+    const params = new URLSearchParams({
+      sort: "created",
+      per_page: 10,
+    });
+
+    const response = await fetch(
+      `${GITHUB_URL}/users/${login}/repos?${params}`,
+      {
+        headers: {
+          Authorization: `token ${GITHUB_TOKEN}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    console.log(
+      "🚀 ~ file: GithubContext.js ~ line 62 ~ getUserRepos ~ data",
+      data
+    );
+
+    dispatch({
+      type: "GET_REPOS",
+      payload: data,
+    });
+  };
+
   //Get single user
   const getUser = async (login) => {
     setLoading();
@@ -69,12 +99,11 @@ export const GithubProvider = ({ children }) => {
   return (
     <GithubContext.Provider
       value={{
-        users: state.users,
-        user: state.user,
-        loading: state.loading,
+        ...state,
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
       }}
     >
       {children}
